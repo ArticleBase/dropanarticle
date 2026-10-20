@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Write & Publish — DropAnArticle</title>
+  <meta name="description" content="The DropAnArticle writer's studio. Compose and publish articles directly to the site.">
+  <meta property="og:title" content="Write & Publish — DropAnArticle">
+  <meta property="og:description" content="The DropAnArticle writer's studio. Compose and publish articles directly to the site.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  
+</head>
+<body>
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a href="index.html" class="logo"><span class="logo-mark">&#9998;</span>Drop<em>AnArticle</em></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Toggle dark mode">&#9790;</button>
+      <a href="admin.html" class="btn btn-primary" style="padding:11px 24px;font-size:0.88rem">&#9998; Drop Article</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="section-subtitle">Writer's Studio</span>
+    <h1>Drop your article</h1>
+    <p>Write, preview, and publish straight to Firestore — your article goes live on the site instantly.</p>
+  </div>
+</section>
+<section class="section" style="padding-top:50px">
+  <div class="container admin-layout">
+    <div>
+      <h2 style="font-size:1.5rem;margin-bottom:20px">Published articles</h2>
+      <div class="admin-list" id="adminList"><p style="color:var(--text-muted)">Loading…</p></div>
+    </div>
+    <form class="form-card reveal" id="adminForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="title">Article title *</label>
+          <input type="text" id="title" name="title" placeholder="The Art of the Perfect Headline" required>
+        </div>
+        <div class="form-group">
+          <label for="slug">Slug (URL)</label>
+          <input type="text" id="slug" name="slug" placeholder="auto-generated-if-empty">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="author">Author name *</label>
+          <input type="text" id="author" name="author" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <select id="category" name="category" required>
+            <option value="Writing Craft">Writing Craft</option>
+            <option value="Technology">Technology</option>
+            <option value="Productivity">Productivity</option>
+            <option value="Growth">Growth &amp; SEO</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date">Publish date</label>
+          <input type="date" id="date" name="date">
+        </div>
+        <div class="form-group">
+          <label for="readTime">Read time</label>
+          <input type="text" id="readTime" name="readTime" placeholder="5 min read">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="image">Cover image URL *</label>
+        <input type="url" id="image" name="image" placeholder="https://images.unsplash.com/…" required>
+      </div>
+      <div class="form-group">
+        <label for="excerpt">Excerpt *</label>
+        <textarea id="excerpt" name="excerpt" style="min-height:80px" placeholder="One or two sentences that sell the article…" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="content">Article body (HTML allowed) *</label>
+        <textarea id="content" name="content" style="min-height:220px" placeholder="<p>Your story…</p>" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="published">Publish immediately</option>
+          <option value="draft">Save as draft</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Publish Article &#8594;</button>
+      <div class="form-status" id="adminStatus" role="status"></div>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo"><span class="logo-mark">&#9998;</span>Drop<em style="background:linear-gradient(135deg,#8f84ff,#5b9bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:normal">AnArticle</em></a>
+        <p>The modern publishing house for curious minds. Drop your article, share your voice, and reach readers who love great stories.</p>
+        <div class="social-row">
+          <a href="#" aria-label="Twitter">&#120143;</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="Instagram">&#9673;</a>
+          <a href="#" aria-label="GitHub">&#9000;</a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="articles.html">All Articles</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="admin.html">Write & Publish</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Topics</h4>
+        <ul>
+          <li><a href="articles.html">Writing Craft</a></li>
+          <li><a href="articles.html">Technology</a></li>
+          <li><a href="articles.html">Productivity</a></li>
+          <li><a href="articles.html">Growth & SEO</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="mailto:hello@dropanarticle.com">hello@dropanarticle.com</a></li>
+          <li><a href="contact.html">Pitch a story</a></li>
+          <li><a href="contact.html">Advertise</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 DropAnArticle. All rights reserved.</span>
+      <span>Crafted with passion &middot; Powered by Firebase</span>
+    </div>
+  </div>
+</footer>
+<script src="js/firebase.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "firestore.rules", "README.md"],
+    "rewrites": [{ "source": "**", "destination": "/404.html" }]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}
