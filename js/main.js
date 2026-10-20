@@ -164,9 +164,15 @@ async function initArticlesPage() {
 /* ---------- Article reader page ---------- */
 async function initReader() {
   const slug = new URLSearchParams(location.search).get("slug");
-  if (!slug) { location.href = "articles.html"; return; }
   const hero = document.getElementById("readerHero");
   const body = document.getElementById("readerBody");
+  if (!hero || !body) return;
+
+  if (!slug) {
+    hero.innerHTML = `<div class="container" style="padding:80px 24px"><h1>Article slug missing</h1></div>`;
+    return;
+  }
+
   let a;
   try { a = await window.DropAnArticleFirebase.fetchArticleBySlug(slug); }
   catch { hero.innerHTML = `<div class="container" style="padding:80px 24px"><h1>Article not found</h1></div>`; return; }
@@ -292,7 +298,7 @@ async function initAdmin() {
     } catch (err) {
       console.error(err);
       statusEl.className = "form-status error";
-      statusEl.textContent = "Firestore write failed. Enable it in Firebase Console → Firestore Database (see README step 3).";
+      statusEl.textContent = "Firestore write failed. Enable it in Firebase Console → Firestore Database.";
       toast("Publish failed", "error");
     }
     btn.disabled = false; btn.textContent = "Publish Article";
@@ -312,15 +318,27 @@ async function initAdmin() {
   refresh();
 }
 
-/* ---------- Boot ---------- */
+/* ---------- Boot (Safely gated per page) ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   applyTheme(getTheme());
   initNav();
   initNewsletter();
-  initHome();
-  initArticlesPage();
-  initReader();
-  initContact();
-  initAdmin();
   initReveal();
+
+  // Safely trigger initializers only when their DOM elements are present
+  if (document.getElementById("latestGrid") || document.getElementById("featuredMain")) {
+    initHome();
+  }
+  if (document.getElementById("articlesGrid")) {
+    initArticlesPage();
+  }
+  if (document.getElementById("readerHero")) {
+    initReader();
+  }
+  if (document.getElementById("contactForm")) {
+    initContact();
+  }
+  if (document.getElementById("adminForm")) {
+    initAdmin();
+  }
 });
