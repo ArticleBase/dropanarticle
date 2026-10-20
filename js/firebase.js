@@ -1,5 +1,5 @@
 /* ============================================================
-   DropAnArticle — Firebase Module
+   DropAnArticle — Firebase Module (Optimized & Hardened)
    Project: dropanarticle (Firebase JS SDK v10, CDN ESM)
    ============================================================ */
 
@@ -21,31 +21,39 @@ let _analytics = null;
 /** Initialize Firebase (idempotent). Analytics loads only in the browser. */
 async function initFirebase() {
   if (_db) return { app: _app, db: _db, ..._mods };
-  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js");
-  const {
-    getFirestore, collection, getDocs, doc, getDoc, addDoc,
-    updateDoc, deleteDoc, query, orderBy, serverTimestamp
-  } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
-
-  _app = initializeApp(FIREBASE_CONFIG);
-  _db = getFirestore(_app);
-  _mods = { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, query, orderBy, serverTimestamp };
-
-  // Analytics (optional — safe-guarded for ad blockers / non-browser)
+  
   try {
-    if (typeof window !== "undefined") {
-      const { getAnalytics } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js");
-      _analytics = getAnalytics(_app);
-    }
-  } catch (e) { /* analytics unavailable — non-fatal */ }
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js");
+    const {
+      getFirestore, collection, getDocs, doc, getDoc, addDoc,
+      updateDoc, deleteDoc, query, orderBy, serverTimestamp
+    } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js");
 
-  return { app: _app, db: _db, analytics: _analytics, ..._mods };
+    _app = initializeApp(FIREBASE_CONFIG);
+    _db = getFirestore(_app);
+    _mods = { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, query, orderBy, serverTimestamp };
+
+    // Analytics (optional — safe-guarded for ad blockers / non-browser)
+    try {
+      if (typeof window !== "undefined") {
+        const { getAnalytics } = await import("https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js");
+        _analytics = getAnalytics(_app);
+      }
+    } catch (e) { 
+      console.warn("[DropAnArticle] Analytics blocked or unavailable:", e.message); 
+    }
+
+    return { app: _app, db: _db, analytics: _analytics, ..._mods };
+  } catch (err) {
+    console.error("[DropAnArticle] Critical: Failed to initialize Firebase modules:", err);
+    throw err;
+  }
 }
 
 const ARTICLES_COLLECTION = "articles";
 const CONTACT_COLLECTION = "messages";
 
-/** Fetch all published articles from Firestore. Falls back to local JSON. */
+/** Fetch all published articles from Firestore. Falls back to local JSON safely. */
 async function fetchArticles() {
   try {
     const { db, collection, getDocs, query, orderBy } = await initFirebase();
@@ -57,9 +65,20 @@ async function fetchArticles() {
     throw new Error("Firestore empty — using fallback");
   } catch (err) {
     console.warn("[DropAnArticle] Firestore unavailable, loading local articles.json:", err.message);
-    const res = await fetch("articles/articles.json");
-    if (!res.ok) throw new Error("Could not load articles.json");
-    return await res.json();
+    
+    // Use an absolute path or relative path based on location to prevent 404 loops on GitHub Pages
+    const jsonPath = window.location.pathname.includes("/dropanarticle/") 
+      ? "/dropanarticle/articles/articles.json" 
+      : "articles/articles.json";
+
+    try {
+      const res = await fetch(jsonPath);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return await res.json();
+    } catch (fetchErr) {
+      console.error("[DropAnArticle] Failed to load fallback articles.json:", fetchErr);
+      return []; // Return empty array instead of crashing the app into a reload loop
+    }
   }
 }
 
@@ -68,11 +87,16 @@ async function fetchArticleBySlug(slug) {
   try {
     const { db, collection, getDocs } = await initFirebase();
     const snap = await getDocs(collection(db, ARTICLES_COLLECTION));
-    const doc = snap.docs.find(d => d.data().slug === slug);
-    if (doc) return { id: doc.id, ...doc.data() };
+    const matchingDoc = snap.docs.find(d => d.data().slug === slug);
+    if (matchingDoc) return { id: matchingDoc.id, ...matchingDoc.data() };
     throw new Error("Not found in Firestore");
   } catch (err) {
-    const res = await fetch("articles/articles.json");
+    const jsonPath = window.location.pathname.includes("/dropanarticle/") 
+      ? "/dropanarticle/articles/articles.json" 
+      : "articles/articles.json";
+
+    const res = await fetch(jsonPath);
+    if (!res.ok) throw new Error("Could not load articles.json");
     const all = await res.json();
     const found = all.find(a => a.slug === slug);
     if (!found) throw new Error("Article not found: " + slug);
