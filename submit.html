@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit a Travel Article — TravelStory Hub</title>
+  <meta name="description" content="Submit original destination guides, practical travel tips, itineraries, and local travel knowledge to TravelStory Hub for editorial review.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="Submit a Travel Article — TravelStory Hub">
+  <meta property="og:description" content="Contribute original travel knowledge and destination stories to TravelStory Hub.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/site-config.js"></script>
+  <script src="js/tinymce-loader.js" defer></script>
+</head>
+<body>
+<header class="navbar"><div class="container navbar-inner">
+  <a href="index.html" class="logo"><span class="logo-mark">✦</span>TravelStory <em>Hub</em></a>
+  <ul class="nav-links" id="navLinks"><li><a href="index.html">Home</a></li><li><a href="articles.html">Travel Articles</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nav-actions"><button class="theme-toggle" aria-label="Toggle dark mode">☾</button><a href="admin.html" class="btn btn-outline nav-quiet-btn">Editorial studio ↗</a><button class="hamburger" id="hamburger" aria-label="Menu">☰</button></div>
+</div></header>
+
+<section class="page-hero contributor-hero"><div class="container"><span class="section-subtitle">Contributor programme</span><h1>Share your view of the world<span class="hero-period">.</span></h1><p>Publish original travel expertise, practical destination guides, and stories that help people travel more thoughtfully.</p></div></section>
+<section class="section contributor-section" style="padding-top:48px"><div class="container contributor-layout">
+  <aside class="contributor-sidebar">
+    <div class="submission-note"><span class="eyebrow">Before you submit</span><h2>Useful stories come first.</h2><p>We welcome original destination guides, practical travel advice, thoughtful itineraries, cultural insights, and responsible tourism stories.</p><p>Every submission is reviewed by an editor. Publication and inclusion of external links are not guaranteed.</p></div>
+    <div class="contributor-guidelines"><h3>Our editorial checklist</h3><ul><li>Write for travellers, not search engines.</li><li>Include genuine expertise, firsthand experience, or useful research.</li><li>Use clear headings and specific practical details.</li><li>Submit only content you own or are authorized to publish.</li><li>Disclose commercial relationships and sponsored links.</li></ul><a href="about.html">Read our standards →</a></div>
+    <div class="contributor-trust-card"><span class="trust-icon">✦</span><strong>Human-reviewed publication</strong><p>Your submission stays private until an editor approves and publishes it.</p></div>
+  </aside>
+
+  <form class="form-card submission-form-card" id="submissionForm">
+    <div class="form-card-heading"><span class="section-subtitle">New submission</span><h2>Pitch a travel story</h2><p class="muted">Complete each required field. Your local draft is saved in this browser while you write.</p></div>
+    <div class="form-row"><div class="form-group"><label for="subTitle">Article title *</label><input id="subTitle" name="title" maxlength="140" required placeholder="A First-Time Visitor's Guide to Kyoto"></div><div class="form-group"><label for="subAuthor">Author / business name *</label><input id="subAuthor" name="author" maxlength="100" required placeholder="Your name or travel company"></div></div>
+    <div class="form-row"><div class="form-group"><label for="subEmail">Contact email *</label><input id="subEmail" name="email" type="email" maxlength="180" autocomplete="email" required placeholder="you@example.com"><p class="form-help">Used by our editors only to discuss this submission.</p></div><div class="form-group"><label for="subWebsite">Author or business website</label><input id="subWebsite" name="website" type="url" maxlength="300" placeholder="https://your-travel-website.com"><p class="form-help">External links are reviewed for relevance and editorial compliance.</p></div></div>
+    <div class="form-row"><div class="form-group"><label for="subCategory">Category *</label><select id="subCategory" name="category" required><option value="">Choose a category</option><option>Destination Guides</option><option>Travel Tips</option><option>Itineraries</option><option>Culture &amp; Food</option><option>Adventure Travel</option><option>Luxury Travel</option><option>Budget Travel</option><option>Family Holidays</option><option>Travel Business</option><option>Responsible Tourism</option><option>Wildlife &amp; Nature</option></select></div><div class="form-group"><label for="subImage">Cover image URL</label><input id="subImage" name="image" type="url" maxlength="700" placeholder="https://example.com/travel-photo.jpg"><p class="form-help">Use a public HTTPS image URL that you have permission to use.</p></div></div>
+    <div class="form-row"><div class="form-group"><label for="subImageAlt">Cover image alt text</label><input id="subImageAlt" name="imageAlt" maxlength="180" placeholder="Briefly describe what appears in the image"></div><div class="form-group"><label for="subTags">Article tags</label><input id="subTags" name="tags" maxlength="300" placeholder="e.g. Japan, food, first-time travel"><p class="form-help">Separate up to 15 relevant tags with commas.</p></div></div>
+    <div class="form-group"><label for="subExcerpt">Short summary *</label><textarea id="subExcerpt" name="excerpt" maxlength="500" minlength="30" required placeholder="Explain what readers will learn from this article…"></textarea><p class="form-help">Write a clear summary in 30–500 characters.</p></div>
+    <div class="form-group"><div class="editor-label-row"><label for="subContent">Full article *</label><span class="editor-pill">Rich-text editor</span></div><textarea id="subContent" name="content" required placeholder="Write your original travel article here…"></textarea><div class="editor-utility-row"><span class="form-help">Use H2/H3 headings, paragraphs, lists, links, and image alt text. Minimum 300 characters of article text.</span><span id="submissionDraftStatus" class="draft-save-status"></span></div><div id="submissionEditorStatus" class="editor-status" role="status"></div></div>
+    <details class="seo-fields"><summary>Optional SEO details</summary><div class="form-group"><label for="subMetaTitle">SEO title</label><input id="subMetaTitle" name="metaTitle" maxlength="70" placeholder="Defaults to your article title"></div><div class="form-group"><label for="subMetaDescription">Meta description</label><textarea id="subMetaDescription" name="metaDescription" maxlength="170" placeholder="Defaults to your article summary"></textarea></div></details>
+    <div class="form-group originality-check"><label><input type="checkbox" name="original" required> <span>I confirm that this article is original, that I have permission to submit all included media, and that I understand publication is subject to editorial review.</span></label></div>
+    <button type="submit" class="btn btn-primary btn-block">Send for editorial review <span>→</span></button>
+    <div class="form-status" id="submissionStatus" role="status" aria-live="polite"></div>
+    <p class="form-privacy-note">Please do not include passwords, payment information, or sensitive personal data in your submission.</p>
+  </form>
+</div></section>
+
+<footer class="footer"><div class="container"><div class="footer-grid">
+  <div><a href="index.html" class="logo"><span class="logo-mark">✦</span>TravelStory <em>Hub</em></a><p>A travel publishing community for destination guides, local expertise, and stories that help people travel better.</p></div>
+  <div><h4>Explore</h4><ul><li><a href="articles.html">Travel articles</a></li><li><a href="about.html">About us</a></li><li><a href="submit.html">Submit a story</a></li></ul></div>
+  <div><h4>Categories</h4><ul><li><a href="articles.html">Destination guides</a></li><li><a href="articles.html">Travel tips</a></li><li><a href="articles.html">Itineraries</a></li></ul></div>
+  <div><h4>Contact</h4><ul><li><a href="contact.html">Contact the editors</a></li><li><a href="about.html#editorial-standards">Editorial standards</a></li></ul></div>
+</div><div class="footer-bottom"><span>© 2026 TravelStory Hub. All rights reserved.</span><span>Great travel writing starts with useful details.</span></div></div></footer>
+<script src="js/firebase.js"></script><script src="js/main.js"></script>
+</body></html>
