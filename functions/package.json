@@ -1,0 +1,13 @@
+{
+  "name": "travelstory-hub-functions",
+  "description": "Server-rendered travel stories and dynamic sitemap for TravelStory Hub.",
+  "private": true,
+  "main": "index.js",
+  "engines": { "node": "20" },
+  "scripts": { "lint": "node --check index.js" },
+  "dependencies": {
+    "firebase-admin": "^13.0.2",
+    "firebase-functions": "^6.3.2",
+    "sanitize-html": "^2.14.0"
+  }
+}
