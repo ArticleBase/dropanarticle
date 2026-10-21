@@ -1,115 +1,114 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editorial Studio — TravelStory Hub</title>
-  <meta name="description" content="A secure editorial workspace for reviewing, editing, and publishing travel stories on TravelStory Hub.">
-  <meta name="robots" content="noindex,nofollow">
-  <meta property="og:title" content="Editorial Studio — TravelStory Hub">
-  <meta property="og:description" content="Manage travel submissions and published stories.">
-  <meta property="og:type" content="website">
-  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="js/site-config.js"></script>
-  <script src="js/tinymce-loader.js" defer></script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editorial Studio — TravelStory Hub</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/admin.css">
+<script src="js/site-config.js"></script>
+<script src="js/tinymce-loader.js" defer></script>
 </head>
-<body class="studio-page">
-<header class="navbar">
-  <div class="container navbar-inner">
-    <a href="index.html" class="logo"><span class="logo-mark">✦</span>TravelStory <em>Hub</em></a>
-    <ul class="nav-links" id="navLinks"><li><a href="index.html">Home</a></li><li><a href="articles.html">Travel Articles</a></li><li><a href="submit.html">Submit a Story</a></li><li><a href="about.html">About</a></li></ul>
-    <div class="nav-actions"><button class="theme-toggle" aria-label="Toggle dark mode">☾</button><a href="articles.html" class="btn btn-outline nav-quiet-btn">View publication ↗</a><button class="hamburger" id="hamburger" aria-label="Menu">☰</button></div>
-  </div>
+<body class="adm">
+<section id="gate"><form class="card gate" id="loginForm">
+  <h1>Editorial Studio</h1><p class="muted">Sign in with a Firebase account that has an <code>editor</code> or <code>admin</code> role.</p>
+  <label for="email">Email</label><input id="email" type="email" autocomplete="username" required>
+  <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required>
+  <button class="ab p" style="margin-top:16px;width:100%;justify-content:center">Sign in →</button>
+  <p id="gateMsg" class="muted" role="status" aria-live="polite"></p>
+  <button type="button" class="ab" id="gateOut" hidden>Sign out</button>
+</form></section>
+
+<div id="app" hidden>
+<aside id="side" aria-label="Sections">
+  <a class="brand" href="index.html">✦ <span class="lbl">TravelStory Hub</span></a>
+  <button data-go="dashboard">◧ <span class="lbl">Dashboard</span></button>
+  <button data-go="articles">▤ <span class="lbl">Articles</span></button>
+  <button data-go="editor" id="navNew">✎ <span class="lbl">Write</span></button>
+  <button data-go="submissions">✉ <span class="lbl">Submissions</span></button>
+  <button data-go="categories">⚑ <span class="lbl">Categories</span></button>
+  <button id="collapse" aria-label="Collapse sidebar" style="margin-top:auto">« <span class="lbl">Collapse</span></button>
+</aside>
+<div>
+<header class="top">
+  <button class="ab s" id="burger" aria-label="Open menu">☰</button>
+  <input id="gSearch" type="search" placeholder="Search articles… (Enter)" aria-label="Search articles" style="max-width:340px">
+  <span style="flex:1"></span>
+  <button class="theme-toggle ab s" aria-label="Toggle dark mode">☾</button>
+  <a class="ab s" href="articles.html" target="_blank" rel="noopener">View site ↗</a>
+  <span id="who" class="muted"></span><button class="ab s" id="out">Sign out</button>
 </header>
-
-<section class="page-hero studio-hero"><div class="container">
-  <span class="section-subtitle">Private workspace</span>
-  <h1>Editorial Studio<span class="hero-period">.</span></h1>
-  <p>Review contributor submissions, shape useful travel stories, and publish articles with confidence.</p>
-</div></section>
-
-<section class="section studio-access-section">
-  <div class="container studio-container">
-    <form class="form-card editor-login-card" id="editorLoginForm">
-      <div class="studio-lock-mark">✦</div>
-      <span class="section-subtitle">Secure editor access</span>
-      <h2 id="editorLoginHeading">Welcome to the studio</h2>
-      <p class="muted">Sign in with a Firebase Authentication account that has an approved <code>editor</code> or <code>admin</code> role.</p>
-      <div class="form-group"><label for="editorEmail">Editor email</label><input id="editorEmail" type="email" autocomplete="username" required placeholder="editor@example.com"></div>
-      <div class="form-group"><label for="editorPassword">Password</label><input id="editorPassword" type="password" autocomplete="current-password" required placeholder="Your password"></div>
-      <button type="submit" class="btn btn-primary btn-block">Sign in to editorial studio <span>→</span></button>
-      <div class="form-status" id="editorLoginStatus" role="status" aria-live="polite">Enable Email/Password in Firebase Authentication, then assign the editor role in Firestore.</div>
-      <button type="button" id="editorSignOut" class="btn btn-outline btn-block" style="display:none;margin-top:12px">Sign out</button>
-      <p class="form-help">Never create a public editor registration form. Administrators assign publishing roles manually.</p>
-    </form>
-  </div>
+<main>
+<section data-view="dashboard" hidden>
+  <div class="row"><h2>Dashboard</h2><button class="ab p" data-new>+ New article</button></div>
+  <div class="grid" id="stats"></div>
+  <div class="card" style="margin-top:14px"><strong>Status distribution</strong><div id="dist" class="dist"></div><small class="muted" id="distLegend"></small></div>
+  <div class="cols"><div class="card"><strong>Recently updated</strong><div id="recentU"></div></div><div class="card"><strong>Recently published</strong><div id="recentP"></div></div></div>
+  <div class="card" style="margin-top:14px"><strong>Shortcuts</strong><p><button class="ab s" data-go="articles">Manage articles</button> <button class="ab s" data-go="categories">Categories</button> <button class="ab s" data-go="submissions">Review submissions</button></p></div>
 </section>
 
-<main class="section studio-main-section" style="padding-top:10px">
-  <div class="container studio-container" id="editorWorkspace" style="display:none">
-    <div class="studio-topline"><div><span class="section-subtitle">Overview</span><h2>Your publication at a glance</h2></div><button type="button" class="btn btn-outline" id="refreshEditorialData">↻ Refresh data</button></div>
-    <div class="studio-stats-grid">
-      <div class="studio-stat-card"><span>Published stories</span><strong id="statArticleCount">—</strong><small>Live on the website</small></div>
-      <div class="studio-stat-card"><span>Pending submissions</span><strong id="statPendingCount">—</strong><small>Awaiting editorial review</small></div>
-      <div class="studio-stat-card"><span>Draft articles</span><strong id="statDraftCount">—</strong><small>Not visible publicly</small></div>
-    </div>
-
-    <section class="studio-section-block">
-      <div class="studio-section-heading"><div><span class="section-subtitle">Inbox</span><h2>Contributor submissions</h2><p class="muted">Review originality, destination relevance, factual accuracy, image rights, and outbound links before publishing.</p></div></div>
-      <div id="submissionQueue" class="submission-queue"><p class="muted">Loading editorial queue…</p></div>
-    </section>
-
-    <section class="studio-section-block category-manager-section">
-      <div class="studio-section-heading"><div><span class="section-subtitle">Taxonomy</span><h2>Travel categories</h2><p class="muted">Categories are stored in Firestore and used by article browsing and submission forms.</p></div></div>
-      <form class="category-manager-form" id="categoryForm">
-        <div class="form-group"><label for="categoryName">Category name</label><input id="categoryName" name="name" maxlength="80" minlength="2" required placeholder="e.g. Rail Journeys"></div>
-        <div class="form-group"><label for="categoryDescription">Description</label><input id="categoryDescription" name="description" maxlength="250" placeholder="What stories belong in this category?"></div>
-        <button class="btn btn-primary" type="submit">Add category +</button>
-      </form>
-      <div id="categoryList" class="category-manager-list"><p class="muted">Loading categories…</p></div>
-    </section>
-
-    <section class="studio-section-block">
-      <div class="studio-section-heading"><div><span class="section-subtitle">Content library</span><h2>Published stories & drafts</h2><p class="muted">Edit existing articles, save new drafts, or publish approved content.</p></div></div>
-      <div class="admin-article-controls">
-        <label class="sr-only" for="adminArticleSearch">Search article titles, summaries, categories, or tags</label><input id="adminArticleSearch" type="search" placeholder="Search articles, summaries, tags…">
-        <label class="sr-only" for="adminStatusFilter">Filter by status</label><select id="adminStatusFilter"><option value="">All statuses</option><option value="published">Published</option><option value="draft">Drafts</option><option value="archived">Archived</option></select>
-      </div>
-      <div id="adminList" class="admin-list"><p class="muted">Loading articles…</p></div>
-      <div class="pagination-controls" id="adminArticlesPagination"><button type="button" class="btn btn-outline btn-small" id="adminArticlesPrevious" disabled>← Previous</button><span id="adminArticlesPageLabel" aria-live="polite">Page 1</span><button type="button" class="btn btn-outline btn-small" id="adminArticlesNext" disabled>Next →</button></div>
-    </section>
-
-    <section class="studio-section-block composer-section" id="articleComposer">
-      <div class="studio-section-heading"><div><span class="section-subtitle">Writer's desk</span><h2 id="composerHeading">Create a travel story</h2><p class="muted">Use TinyMCE to format a useful, original article. Draft autosave is local until you save it to Firebase.</p></div><span class="editor-pill">TinyMCE Editor</span></div>
-      <form class="form-card editor-form-card" id="adminForm">
-        <div class="form-row"><div class="form-group"><label for="title">Article title *</label><input id="title" name="title" maxlength="140" required placeholder="A Thoughtful Guide to Exploring Madeira"></div><div class="form-group"><label for="slug">URL slug *</label><input id="slug" name="slug" maxlength="140" required placeholder="madeira-travel-guide"><p class="form-help">Lowercase words separated by hyphens. Keep published slugs stable where possible.</p></div></div>
-        <div class="form-row"><div class="form-group"><label for="author">Author name *</label><input id="author" name="author" maxlength="100" required placeholder="Author or editorial team"></div><div class="form-group"><label for="authorWebsite">Author / contributor website</label><input id="authorWebsite" name="authorWebsite" type="url" maxlength="300" placeholder="https://example.com"></div></div>
-        <div class="form-row"><div class="form-group"><label for="category">Category *</label><select id="category" name="category" required><option>Destination Guides</option><option>Travel Tips</option><option>Itineraries</option><option>Culture &amp; Food</option><option>Adventure Travel</option><option>Luxury Travel</option><option>Budget Travel</option><option>Family Holidays</option><option>Travel Business</option><option>Responsible Tourism</option><option>Wildlife &amp; Nature</option></select></div><div class="form-group"><label for="date">Publication date</label><input id="date" name="date" type="date"></div></div>
-        <div class="form-row"><div class="form-group"><label for="readTime">Reading time</label><input id="readTime" name="readTime" placeholder="Auto-calculated if blank"></div><div class="form-group"><label for="status">Publication status</label><select id="status" name="status"><option value="draft">Save as draft</option><option value="published">Publish article</option><option value="archived">Archive article</option></select></div></div>
-        <div class="form-row"><div class="form-group"><label for="image">Cover image URL</label><input id="image" name="image" type="url" placeholder="https://…"><p class="form-help">Use an image you own or have permission to publish. Inline image uploads in TinyMCE require editor permissions.</p></div><div class="form-group"><label for="imageAlt">Cover image alternative text</label><input id="imageAlt" name="imageAlt" maxlength="180" placeholder="Describe the image for screen readers"></div></div>
-        <div class="form-group"><label for="tags">Article tags</label><input id="tags" name="tags" maxlength="300" placeholder="Japan, food, island travel"><p class="form-help">Separate relevant terms with commas.</p></div>
-        <div class="form-group"><label for="excerpt">Article summary *</label><textarea id="excerpt" name="excerpt" minlength="30" maxlength="500" required placeholder="A useful, accurate summary of what readers will learn…"></textarea><p class="form-help">Aim for 140–240 characters where possible.</p></div>
-        <div class="form-group"><label for="content">Full article *</label><textarea id="content" name="content" required placeholder="Start writing your travel story…"></textarea><p class="form-help">Use H2/H3 headings, meaningful internal links, helpful lists, image alt text, and original experience or research. Avoid thin promotional copy.</p><div class="editor-utility-row"><span id="adminDraftStatus" class="draft-save-status">Draft stays on this device until saved to Firebase.</span><span id="adminEditorStatus" class="editor-status" role="status"></span></div></div>
-        <div class="form-row"><div class="form-group"><label for="metaTitle">SEO title</label><input id="metaTitle" name="metaTitle" maxlength="70" placeholder="Optional; defaults to article title"><p class="form-help">Recommended: keep it clear and concise.</p></div><div class="form-group"><label for="metaDescription">Meta description</label><textarea id="metaDescription" name="metaDescription" maxlength="170" placeholder="Optional; defaults to the article summary"></textarea></div></div>
-        <div class="composer-actions"><button type="submit" class="btn btn-primary">Save article <span>→</span></button><button type="button" class="btn btn-outline" id="resetComposer">New article</button><span class="form-help">Publishing makes this article visible on the public website.</span></div>
-        <div class="form-status" id="adminStatus" role="status" aria-live="polite"></div>
-      </form>
-    </section>
+<section data-view="articles" hidden>
+  <div class="row"><h2>Articles</h2><button class="ab p" data-new>+ New article</button></div>
+  <div class="card"><div class="filters">
+    <div><label for="fSearch">Search</label><input id="fSearch" type="search" placeholder="Title, summary, category, tag"></div>
+    <div><label for="fStatus">Status</label><select id="fStatus"><option value="">All</option><option value="published">Published</option><option value="draft">Draft</option><option value="archived">Archived</option></select></div>
+    <div><label for="sortBy">Sort this page</label><select id="sortBy"><option value="">Last updated</option><option value="title">Title</option><option value="date">Date</option><option value="status">Status</option></select></div>
+    <div><label for="pageSize">Per page</label><select id="pageSize"><option>10</option><option>20</option><option>50</option></select></div>
   </div>
-</main>
+  <div class="bulk" id="bulk" hidden><span id="bulkN"></span>
+    <button class="ab s" data-bulk="published">Publish</button><button class="ab s" data-bulk="draft">Unpublish</button><button class="ab s" data-bulk="archived">Archive</button><button class="ab s d" data-bulk="delete">Delete</button></div>
+  <div class="tw"><table><thead><tr><th><input type="checkbox" id="selAll" aria-label="Select all"></th><th>Article</th><th>Category</th><th>Author</th><th>Status</th><th>Date</th><th>Updated</th><th>Actions</th></tr></thead><tbody id="rows"></tbody></table></div>
+  <div class="row" style="margin-top:12px"><button class="ab s" id="prev" disabled>← Previous</button><span id="pageLbl" aria-live="polite">Page 1</span><button class="ab s" id="next" disabled>Next →</button></div></div>
+</section>
 
-<footer class="footer"><div class="container"><div class="footer-grid">
-  <div><a href="index.html" class="logo"><span class="logo-mark">✦</span>TravelStory <em>Hub</em></a><p>A travel publishing community for destination guides, local expertise, and stories that help people travel better.</p></div>
-  <div><h4>Explore</h4><ul><li><a href="index.html">Home</a></li><li><a href="articles.html">Travel articles</a></li><li><a href="submit.html">Submit a story</a></li></ul></div>
-  <div><h4>Editorial</h4><ul><li><a href="about.html">Our standards</a></li><li><a href="contact.html">Contact the editors</a></li></ul></div>
-  <div><h4>Contributor support</h4><ul><li><a href="contact.html">Contact the editorial team</a></li><li><a href="submit.html">Submission guidelines</a></li></ul></div>
-</div><div class="footer-bottom"><span>© 2026 TravelStory Hub. All rights reserved.</span><span>Editorial decisions are reviewed by a human editor.</span></div></div></footer>
+<section data-view="editor" hidden>
+<form id="articleForm" novalidate>
+  <div class="row"><h2 id="edHead">New article</h2><span id="saveState" class="muted" role="status" aria-live="polite"></span></div>
+  <div class="ed"><div>
+    <div class="card"><label for="title">Title *</label><input id="title" name="title" maxlength="140" required>
+      <label for="slug">URL slug *</label><input id="slug" name="slug" maxlength="140" required>
+      <label for="excerpt">Summary * <small class="muted" id="exN"></small></label><textarea id="excerpt" name="excerpt" rows="3" maxlength="500"></textarea>
+      <label for="content">Article *</label><textarea id="content" name="content" rows="18"></textarea>
+      <small class="muted" id="edNote">Headings: the title is the page’s H1 — use H2/H3/H4 inside the article.</small></div>
+  </div><aside class="side-col">
+    <div class="card"><strong>Publish</strong>
+      <label for="status">Status</label><select id="status" name="status"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select>
+      <label for="date">Publication date</label><input id="date" name="date" type="date">
+      <p><button class="ab p" id="saveBtn" type="submit">Save</button> <button class="ab" type="button" id="pvBtn">Preview</button></p>
+      <small class="muted">Scheduled publishing needs a backend scheduler and is not available.</small></div>
+    <div class="card"><strong>Organise</strong>
+      <label for="category">Category *</label><select id="category" name="category"></select>
+      <label for="tags">Tags</label><input id="tags" name="tags" maxlength="300" placeholder="comma, separated">
+      <label for="author">Author *</label><input id="author" name="author" maxlength="100">
+      <label for="authorWebsite">Author website</label><input id="authorWebsite" name="authorWebsite" type="url">
+      <label for="readTime">Reading time</label><input id="readTime" name="readTime" placeholder="auto if blank"></div>
+    <div class="card"><strong>Cover image</strong><img id="imgPrev" class="cover" alt="" hidden><small class="muted" id="imgInfo"></small>
+      <label for="image">Image URL</label><input id="image" name="image" type="url" placeholder="https://…">
+      <label for="imageAlt">Alt text</label><input id="imageAlt" name="imageAlt" maxlength="180">
+      <p><label class="ab s" for="imgFile" style="margin:0;cursor:pointer">Upload…</label><input id="imgFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="sr-only"> <button type="button" class="ab s d" id="imgRm">Remove</button></p>
+      <progress id="imgProg" max="100" value="0" hidden style="width:100%"></progress></div>
+    <div class="card"><strong>SEO</strong>
+      <label for="metaTitle">SEO title <small class="muted" id="mtN"></small></label><input id="metaTitle" name="metaTitle" maxlength="70">
+      <label for="metaDescription">Meta description <small class="muted" id="mdN"></small></label><textarea id="metaDescription" name="metaDescription" rows="3" maxlength="170"></textarea>
+      <label for="focusKw">Focus keyword <small class="muted">(check only, not saved)</small></label><input id="focusKw">
+      <div class="serp" id="serp" aria-label="Search result preview"></div>
+      <ul class="checks" id="checks" aria-live="polite"></ul></div>
+    <div class="card"><strong>Heading outline</strong><div id="outline" class="outline"></div></div>
+  </aside></div>
+</form>
+</section>
+
+<section data-view="submissions" hidden><div class="row"><h2>Contributor submissions</h2><button class="ab s" id="subRefresh">↻ Refresh</button></div><div id="subs"></div></section>
+<section data-view="categories" hidden><h2>Categories</h2>
+  <form class="card filters" id="catForm"><div><label for="catName">Name</label><input id="catName" required minlength="2" maxlength="80"></div><div><label for="catDesc">Description</label><input id="catDesc" maxlength="250"></div><div><label>&nbsp;</label><button class="ab p">Add category</button></div></form>
+  <div id="cats" class="grid" style="margin-top:14px"></div></section>
+</main></div></div>
+
+<dialog id="preview"><div class="row"><strong>Preview — includes unsaved edits, rendered with the public sanitizer</strong><button class="ab s" id="pvClose">Close ✕</button></div><article id="pvBody" class="prose"></article></dialog>
 <script src="js/firebase.js"></script>
 <script src="js/main.js"></script>
-
+<script src="js/admin.js"></script>
 </body>
 </html>
